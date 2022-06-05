@@ -14,7 +14,7 @@ long long int fatorial(int f){
     else{
         resultado = 1;
     }
-    return(resultado);
+    return("%e", resultado);
 }
 
 int main()
@@ -26,6 +26,6 @@ scanf("%lli", &n);
 for(fat = 1; n > 1; n = n - 1)
 fat = fat * n;
 
-printf("\nFatorial calculado: %lli", fat);
+printf("\nFatorial calculado: %e", fat);
 return 0;
 }

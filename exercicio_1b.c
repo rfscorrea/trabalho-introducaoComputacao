@@ -6,17 +6,17 @@
 
 int main(){
     float pi = 3.14159265359;
-    float angulo;
-    double seno, cosseno;
+    float anguloB;
+    double senoB, cossenoB;
     int n;
     printf("Valor do angulo em graus: ");
-    scanf("%f", &angulo);
+    scanf("%f", &anguloB);
     for (n = 0; n <= 39; n = n + 1)
     {
-        seno += pow(-1, n) * pow(angulo * pi / 180, 2 * n + 1) / fatorial(2 * n + 1);
-        cosseno += pow(-1, n) * pow(angulo * pi / 180, 2 * n)  / fatorial(2 * n);
+        senoB += pow(-1, n) * pow(anguloB * pi / 180, 2 * n + 1) / fatorial(2 * n + 1);
+        cossenoB += pow(-1, n) * pow(anguloB * pi / 180, 2 * n)  / fatorial(2 * n);
     }
-    printf("Angulo digitado: %.2f graus \nSeno = %.2f \nCosseno = %.2f", angulo, seno, cosseno);
+    printf("Angulo digitado: %.2f graus \nSeno = %g \nCosseno = %g", anguloB, senoB, cossenoB);
     return (0);
 }
 
