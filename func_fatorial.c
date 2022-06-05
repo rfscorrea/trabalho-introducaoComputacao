@@ -3,15 +3,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int fatorial(int f){
-    int resultado = 1;
+long long int fatorial(int f){
+    long long int resultado = 1;
     if(f>=2){
-        for(f; f >= 2; f = f-1){
-            resultado = resultado * f;
+        while(f>=2){
+            resultado *= f;
+            f -= 1;
         }
     }
     else{
         resultado = 1;
     }
     return(resultado);
+}
+
+int main()
+{
+long long int fat, n;
+printf("Insira um valor para o qual deseja calcular seu fatorial: ");
+scanf("%lli", &n);
+
+for(fat = 1; n > 1; n = n - 1)
+fat = fat * n;
+
+printf("\nFatorial calculado: %lli", fat);
+return 0;
 }
