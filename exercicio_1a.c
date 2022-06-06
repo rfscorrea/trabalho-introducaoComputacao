@@ -1,6 +1,5 @@
-///////////////////* EXERCÍCIO 1.a *///////////////////
-#include <stdio.h>
-#include <stdlib.h>
+//EXERCÍCIO 1.a
+/*#include <stdlib.h>
 #include <math.h>
 
 int main(){
@@ -10,10 +9,11 @@ int main(){
     printf("Valor do angulo em graus: ");
     scanf("%f", &anguloA);
     for(n = 0; n <= 2; n = n+1){
-        senoA += pow(-1,n) * pow(anguloA*pi/180, 2*n+1) / fatorial(2*n+1);
-        cossenoA += pow(-1,n) * pow(anguloA*pi/180, 2*n) / fatorial(2*n);
+        senoA += (pow(anguloA * pi / 180, 2 * n + 1) / fatorial(2*n+1)) * pow(-1, n);
+        cossenoA += (pow(anguloA * pi / 180, 2 * n)  / fatorial(2*n)) * pow(-1, n);
     }
-    printf("Angulo digitado: %.2f graus \nSeno = %.2f \nCosseno = %.2f", anguloA, senoA, cossenoA);
+    printf("Angulo digitado: %.3f graus \nSeno = %.100f \nCosseno = %.100f", anguloA, senoA, cossenoA);
+    printf("\n\n Seno: %.100f \nCosseno: %.100f", sin(anguloA*pi/180), cos(anguloA*pi/180));
     return(0);
 }
 
@@ -28,4 +28,4 @@ int fatorial(int f){        //função para calcular fatorial de um número f
         resultado = 1;
     }
     return(resultado);
-}
+}*/

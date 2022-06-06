@@ -1,6 +1,6 @@
-///////////////////* EXERCÍCIO 1.c *///////////////////
+// EXERCÍCIO 1.c
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -14,4 +14,4 @@ int main(){
     printf("\nAngulo digitado: %.2f graus \nSeno = %.2f \nCosseno = %.2f", anguloC, sin(anguloRAD), cos(anguloRAD));
 
     return(0);
-}
+}*/
