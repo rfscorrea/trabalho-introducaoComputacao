@@ -77,5 +77,7 @@ int main(){
     printf("=================================\n\n");
     printf("============== Entre b-c: ============== \nseno: %.30f%% \ncos: %.30f%%", fabs(erroPorc_bc_sen), fabs(erroPorc_bc_cos));
     printf("\n================ FIM =================\n\n");
+
+    system("pause");
     return(0);
 }
