@@ -2,20 +2,23 @@
 #include <stdlib.h>
 
 int main(){
-    int i = 0;
+    #define numeroDeClientes 100 //número máximo de clientes que podem ser cadastrados
+    #define numeroDeCaracteres 100 //número máximo de caracteres nas info de um cliente 
+    int i = 0; //índice para relacionar cada cliente e suas info a um número inteiro único i
+
     //variáveis para cadastrar clientes
-    char clienteNome[100][100];
-    char clienteEndereco[100][100];
-    char clienteNascimento[100][100];
-    int clienteCpf[100][100];
+    char clienteNome[numeroDeClientes][numeroDeCaracteres];
+    char clienteEndereco[numeroDeClientes][numeroDeCaracteres];
+    char clienteNascimento[numeroDeClientes][numeroDeCaracteres];
+    int clienteCpf[numeroDeClientes][numeroDeCaracteres];
 
-    char clienteEmp_data[100][100];
-    int clienteEmp_valor[100][100];
+    char clienteEmp_data[numeroDeClientes][numeroDeCaracteres];
+    int clienteEmp_valor[numeroDeClientes][numeroDeCaracteres];
 
-    int clienteEmp_parcelaInfo_valor[100][100];
-    char clienteEmp_parcelaInfo_situacao[100][100];
-    char clienteEmp_parcelaInfo_dataVencimento[100][100];
-    char clienteEmp_parcelaInfo_dataPagamento[100][100];
+    int clienteEmp_parcelaInfo_valor[numeroDeClientes][numeroDeCaracteres];
+    char clienteEmp_parcelaInfo_situacao[numeroDeClientes][numeroDeCaracteres];
+    char clienteEmp_parcelaInfo_dataVencimento[numeroDeClientes][numeroDeCaracteres];
+    char clienteEmp_parcelaInfo_dataPagamento[numeroDeClientes][numeroDeCaracteres];
 
     //cadastrando um cliente
     printf("=== CADASTRO DE CLIENTE ===\n");
