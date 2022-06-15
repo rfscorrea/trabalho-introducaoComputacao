@@ -9,40 +9,43 @@ int main(){
     //variáveis para cadastrar clientes
     char clienteNome[numeroDeClientes][numeroDeCaracteres];
     char clienteEndereco[numeroDeClientes][numeroDeCaracteres];
-    char clienteNascimento[numeroDeClientes][numeroDeCaracteres];
+    int clienteNascimento_dia[numeroDeClientes][numeroDeCaracteres];
+    int clienteNascimento_mes[numeroDeClientes][numeroDeCaracteres];
     int clienteCpf[numeroDeClientes][numeroDeCaracteres];
 
-    char clienteEmp_data[numeroDeClientes][numeroDeCaracteres];
+    int clienteEmp_data_dia[numeroDeClientes][numeroDeCaracteres];
+    int clienteEmp_data_mes[numeroDeClientes][numeroDeCaracteres];
     int clienteEmp_valor[numeroDeClientes][numeroDeCaracteres];
 
     int clienteEmp_parcelaInfo_valor[numeroDeClientes][numeroDeCaracteres];
-    char clienteEmp_parcelaInfo_situacao[numeroDeClientes][numeroDeCaracteres];
+    int clienteEmp_parcelaInfo_numero[numeroDeClientes][numeroDeCaracteres];
     char clienteEmp_parcelaInfo_dataVencimento[numeroDeClientes][numeroDeCaracteres];
     char clienteEmp_parcelaInfo_dataPagamento[numeroDeClientes][numeroDeCaracteres];
 
     //cadastrando um cliente
-    printf("=== CADASTRO DE CLIENTE ===\n");
+    printf("==== CADASTRO DE CLIENTE ====\n");
     printf("Nome: ");
     gets(clienteNome[i]);
-    printf("\nEndereco: ");
+    printf("Endereco: ");
     gets(clienteEndereco[i]);
-    printf("\nData de nascimento (dd/mm/aa): ");
-    gets(clienteNascimento[i]);
-    printf("\nCpf: ");
+    printf("Cpf: ");
     scanf("%i", &clienteCpf[i]);
+    printf("\nData de nascimento:\n");
+    printf("Dia: ");
+    scanf("%i", &clienteNascimento_dia[i]);
+    printf("Mes: ");
+    scanf("%i", &clienteNascimento_mes[i]);
     printf("\nValor do emprestimo: R$");
     scanf("%i", &clienteEmp_valor[i]);
-    printf("\nData do emprestimo (dd/mm/aa): ");
-    getchar();
-    gets(clienteEmp_data[i]);
+    printf("\nData do emprestimo:\n");
+    printf("Dia: ");
+    scanf("%i", &clienteEmp_data_dia[i]);
+    printf("Mes: ");
+    scanf("%i", &clienteEmp_data_mes[i]);
     printf("\nValor da parcela: R$");
     scanf("%f", &clienteEmp_parcelaInfo_valor[i]);
-    printf("\nSituacao da parcela: ");
-    getchar();
-    gets(clienteEmp_parcelaInfo_situacao[i]);
-    printf("\nData de vencimento da parcela: ");
-    gets(clienteEmp_parcelaInfo_dataVencimento[i]);
-    printf("\nData de pagamento da parcela: ");
-    gets(clienteEmp_parcelaInfo_dataPagamento[i]);
+    printf("Quantas parcelas: ");
+    scanf("%i", &clienteEmp_parcelaInfo_numero[i]);
+    printf("==== CLIENTE %i CADASTRADO ====\n", i);
     return(0);
 }

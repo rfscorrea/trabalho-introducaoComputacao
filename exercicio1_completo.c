@@ -17,7 +17,7 @@ double fatorial(int x){ //FUNÇÃO PARA CALCULAR FATORIAL
 int main(){
     float pi = 3.14159265359;
 
-//A
+// a)
     float angulo, senoA, cossenoA;
     int n;
     printf("Valor do angulo em graus: ");
@@ -38,7 +38,7 @@ int main(){
     printf("Angulo digitado: %.2f graus\n\n ============================== PARA 3 TERMOS ============================== \nSeno = %.20f \nCosseno = %.20f", angulo, senoA, cossenoA);
     printf("\n============================================================================\n\n ");
 
-//B
+// b)
     double senoB, cossenoB;
     for (n = 0; n <= 39; n = n + 1)
     {
@@ -48,12 +48,12 @@ int main(){
     printf("============================== PARA 40 TERMOS ============================== \nSeno = %.20f \nCosseno = %.20f",senoB, cossenoB);
     printf("\n============================================================================\n\n");
 
-//C
+// c)
     printf("======================== UTILIZANDO A BIBLIOTECA MATH.H ========================\n");
     printf("Seno = %.20f \nCosseno = %.20f", sin(anguloRAD), cos(anguloRAD));
     printf("\n============================================================================\n\n");
 
-//D
+// d)
     /*ERROS EM VALORES ABSOLUTOS*/
     double erroAbs_ac_sen = senoA - sin(anguloRAD);
     double erroAbs_bc_sen = senoB - sin(anguloRAD);
