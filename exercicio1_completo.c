@@ -19,14 +19,14 @@ double fat(int x){     // funcao calcula fatorial de x
 }
 
 
-result(char tit[100], float sen, float cos){        //funcao imprimi resultado com titulo
+void result(char tit[100], float sen, float cos){        //funcao imprimi resultado com titulo
     printf("\n============== %s ==============\n", tit);
     printf("Seno: %.30f \nCosseno: %.30f", sen, cos);
     printf("\n=========================================\n");
 }
 
 
-fresult(char tit[100], float sen, float cos){        //funcao imprimi resultado em porcentagem com titulo
+void fresult(char tit[100], float sen, float cos){        //funcao imprimi resultado em porcentagem com titulo
     printf("\n=============== %s ==============\n", tit);
     printf("Seno: %.30f%% \nCosseno: %.30f%%", sen, cos);
     printf("\n==========================================\n");
