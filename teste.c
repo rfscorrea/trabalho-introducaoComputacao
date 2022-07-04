@@ -1,17 +1,13 @@
-// estudo de clientess encadeadas utilizando ponteiros
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-// struct para datas
 typedef struct data{
     int dia, mes, ano;
 }dt;
 
 
-// struct para emprestimos
 typedef struct emprestimos{
     float valor;
     dt data;
@@ -25,6 +21,7 @@ typedef struct cliente{
     dt nascimento;
     emp emprestimo;
     int parcelas;
+    int parcelaspagas;
     struct cliente *proximo;
 }cli;
 
@@ -40,16 +37,14 @@ void adicionarcliente(cli **lista){
         fgets(novo->endereco, 1000, stdin);
         printf("Cpf: ");
         scanf("%i%*c", &novo->cpf);
-
-        printf("\nData de nascimento: ");
+        printf("\n~~~~ Data de nascimento ~~~~");
         printf("\nDia: ");
         scanf("%i%*c", &novo->nascimento.dia);
-        printf("\nMes: ");
+        printf("Mes: ");
         scanf("%i%*c", &novo->nascimento.mes);
-        printf("\nAno: ");
+        printf("Ano: ");
         scanf("%i%*c", &novo->nascimento.ano);
-
-        printf("\nData de emprestimo: ");
+        printf("\n~~~~ Data de emprestimo ~~~~");
         printf("\nDia: ");
         scanf("%i%*c", &novo->emprestimo.data.dia);
         printf("Mes: ");
@@ -58,13 +53,13 @@ void adicionarcliente(cli **lista){
         scanf("%i%*c", &novo->emprestimo.data.ano);
         printf("\nValor do emprestimo: R$");
         scanf("%f%*c", &novo->emprestimo.valor);
-        printf("\nQuantas parcelas: ");
+        printf("Quantas parcelas: ");
         scanf("%i%*c", &novo->parcelas);
-        
+        novo->parcelaspagas = 0;
         novo->proximo = NULL;
     }
     else{
-        printf("\nmemoria nao alocada!!\n");
+        exit(0);
     }
 
     if(*lista == NULL){
@@ -103,6 +98,7 @@ void removercliente(cli **lista){
         }
     }
     else{
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
     }
     free(remover);
@@ -113,6 +109,7 @@ void editarcliente(cli **lista){
     cli *aux;
     int cpf;
     if(*lista == NULL){
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
     }
     else{
@@ -191,12 +188,84 @@ void editarcliente(cli **lista){
 }
 
 
-void imprimirtodos(cli *aux){
-    if(aux == NULL){
+void verparcelas(cli *lista){
+    cli *aux = lista;
+    cli *aux2;
+    int dia, mes, ano;
+    int i, j = 1;
+    
+    dia = aux->emprestimo.data.dia;
+    mes = aux->emprestimo.data.mes;
+    ano = aux->emprestimo.data.ano;
+
+    for(i = 1 + aux->parcelaspagas; i <= aux->parcelas; i++){
+    
+        if(mes>=12){
+            mes = 1; 
+            ano++;
+        }
+        else{
+            mes++;
+        }
+
+        printf("\n[%i]parcela 'EM ABERTO' vencimento:  %i/%i/%i", i, dia, mes, ano);
+    }
+    printf("\n");
+}
+
+
+void cadastrarparcelapaga(cli **lista){
+    dt data;
+    cli *aux;
+    int cpf;
+
+    if(*lista == NULL){
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
     }
     else{
-        printf("\n~~~~ CLIENTES ~~~~\n");
+        aux = *lista;
+        printf("Cpf do cliente: ");
+        scanf("%i%*c", &cpf);
+        
+        if(aux->cpf == cpf){
+            aux->parcelaspagas += 1;
+        }
+        else{
+            while(aux->proximo != NULL){
+                aux = aux->proximo;
+                if(aux->cpf == cpf){
+                    printf("Cpf do cliente que deseja editar: ");
+                    scanf("%i%*c", &cpf);
+        
+                    if(aux->cpf == cpf){
+                        aux->parcelaspagas += 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("\n~~~~~CADASTRANDO PARCELA PAGA ~~~~\n");
+    printf("Data do pagamento: ");
+    printf("\nDia: ");
+    scanf("%i%*c", &data.dia);
+    printf("Mes: ");
+    scanf("%i%*c", &data.mes);
+    printf("Anp: ");
+    scanf("%i%*c", &data.ano);
+    
+}
+
+
+void imprimirtodos(cli *aux){
+    if(aux == NULL){
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
+    }
+    else{
+        printf("\n~~~~~~~~~~~ CLIENTES ~~~~~~~~~~~\n");
         while(aux){
             printf("[%i]%s", aux->cpf, aux->nome);
             aux = aux->proximo;
@@ -209,21 +278,33 @@ void imprimircliente(cli *cliente){
     cli *aux;
     aux = cliente;
     int cpf;
+    float valor;
+    int dia, mes, ano, i;
 
     if(cliente != NULL){
         printf("Cpf do cliente que deseja visualizar: ");
         scanf("%i%*c", &cpf);
 
         if(aux->cpf == cpf){
+            valor = aux->emprestimo.valor / aux->parcelas;
+            printf("\n~~~~~ INFORMACOES DO CLIENTE ~~~~\n");
             printf(
-                "\nNome: %s"
-                "\nEndereco: %s"
-                "\nCpf: %i"
-                "\nData de nascimento: %i/%i/%i"
-                "\nData do emprestimo: %i/%i/%i"
-                "\nValor do emprestimo: %.2f"
-                "\nNumero de parcelas: %i", aux->nome, aux->endereco, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano, aux->emprestimo.data.mes, aux->emprestimo.data.mes, aux->emprestimo.data.ano, aux->emprestimo.valor, aux->parcelas
+                "Nome: %s"
+                "Endereco: %s"
+                "Cpf: %i"
+                "\nData de nascimento: %i/%i/%i", 
+                aux->nome, aux->endereco, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano
             );
+            if(aux->parcelaspagas != aux->parcelas){
+                printf(
+                    "\nData do emprestimo: %i/%i/%i"
+                    "\nValor do emprestimo: %.2f"
+                    "\nNumero de parcelas: %i parcelas de R$%.2f\n", 
+                    aux->emprestimo.data.mes, aux->emprestimo.data.mes, aux->emprestimo.data.ano, aux->emprestimo.valor, aux->parcelas, valor
+                );
+            }
+
+            verparcelas(cliente);
         }
         else{
             while(aux->proximo != NULL){
@@ -238,6 +319,7 @@ void imprimircliente(cli *cliente){
                         "\nValor do emprestimo: %.2f"
                         "\nNumero de parcelas: %i", aux->nome, aux->endereco, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano, aux->emprestimo.data.mes, aux->emprestimo.data.mes, aux->emprestimo.data.ano, aux->emprestimo.valor, aux->parcelas
                     );
+                    verparcelas(cliente);
                     break;
                 }
             }
@@ -246,7 +328,70 @@ void imprimircliente(cli *cliente){
         
     }
     else{
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
+    }
+}
+
+
+void cadastraremprestimo(cli **lista){
+    cli *aux;
+    int cpf;
+    if(*lista == NULL){
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        printf("\nNENHUM CLIENTE CADASTRADO!!!\n");
+    }
+    else{
+        aux = *lista;
+        printf("Cpf do cliente: ");
+        scanf("%i%*c", &cpf);
+        if(aux->cpf == cpf){
+            if(aux->parcelaspagas == aux->parcelas){
+                aux->parcelaspagas = 0;
+                printf("\nData de emprestimo: ");
+                printf("\nDia: ");
+                scanf("%i%*c", &aux->emprestimo.data.dia);
+                printf("Mes: ");
+                scanf("%i%*c", &aux->emprestimo.data.mes);
+                printf("Ano: ");
+                scanf("%i%*c", &aux->emprestimo.data.ano);
+                printf("\nValor do emprestimo: R$");
+                scanf("%f%*c", &aux->emprestimo.valor);
+                printf("\nQuantas parcelas: ");
+                scanf("%i%*c", &aux->parcelas);
+            }
+            else{
+                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                printf("\nAINDA HA PARCELAS EM ABERTO NESSE CPF\n");
+            }
+        }
+        else{
+            while(aux->proximo != NULL){
+                aux = aux->proximo;
+                if(aux->cpf == cpf){
+                    printf("Cpf do cliente: ");
+                    scanf("%i%*c", &cpf);
+                    if(aux->cpf == cpf){
+                        if(aux->parcelaspagas == aux->parcelas){
+                            aux->parcelaspagas = 0;
+                            printf("\nData de emprestimo: ");
+                            printf("\nDia: ");
+                            scanf("%i%*c", &aux->emprestimo.data.dia);
+                            printf("Mes: ");
+                            scanf("%i%*c", &aux->emprestimo.data.mes);
+                            printf("Ano: ");
+                            scanf("%i%*c", &aux->emprestimo.data.ano);
+                            printf("\nValor do emprestimo: R$");
+                            scanf("%f%*c", &aux->emprestimo.valor);
+                            printf("\nQuantas parcelas: ");
+                            scanf("%i%*c", &aux->parcelas);
+                        }
+                        else{printf("\nAINDA HA PARCELAS EM ABERTO\n");}
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -254,8 +399,10 @@ void imprimircliente(cli *cliente){
 int main(){
     cli *clientes = NULL;
     int r;
+    dt data;
 
     while(r != 0){
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf(
             "\n[1] Cadastrar cliente"
             "\n[2] Visualizar as informacoeses de um cliente"
@@ -281,6 +428,12 @@ int main(){
         case 3:
             editarcliente(&clientes);
             break;
+        case 4:
+            cadastrarparcelapaga(&clientes);
+            break;
+        case 5:
+            cadastraremprestimo(&clientes);
+            break;
         case 6:
             removercliente(&clientes);
             break;
@@ -288,7 +441,8 @@ int main(){
             imprimirtodos(clientes);
             break;
         default:
-            printf("invalido");
+            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            printf("\nOPCAO INVALIDA\n");
             break;
         }
         
