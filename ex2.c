@@ -2,29 +2,42 @@
 #include <stdlib.h>
 #include <string.h>
 
+////////////////////////////// structs //////////////////////////////
 
 typedef struct data{
     int dia, mes, ano;
 }dt;
 
 
-typedef struct emprestimos{
+typedef struct emprestimo{
     float valor;
     dt data;
 }emp;
 
 
-typedef struct cliente{
+typedef struct endereco{
+    char rua[100];
+    int numero;
+    char cep[100];
+    char bairro[100];
+    char cidade[100];
+    char estado[3];
+}end;
+
+
+typedef struct informacoescliente{
     char nome[1000];
     int cpf;
-    char endereco[1000];
+    end endereco;
     dt nascimento;
     emp emprestimo;
     int parcelas;
     int parcelaspagas;
-    struct cliente *proximo;
+    struct informacoescliente *proximo;
 }cli;
 
+
+////////////////////////////// funcoes //////////////////////////////
 
 void adicionarcliente(cli **lista){
     cli *novo = malloc(sizeof(cli));
@@ -33,10 +46,21 @@ void adicionarcliente(cli **lista){
     if(novo){
         printf("\nNome: ");
         fgets(novo->nome, 1000, stdin);
-        printf("Endereco: ");
-        fgets(novo->endereco, 1000, stdin);
-        printf("Cpf: ");
+        printf("CPF: ");
         scanf("%i%*c", &novo->cpf);
+        printf("\n~~~~ Endereco ~~~~");
+        printf("\nRua: ");
+        fgets(novo->endereco.rua, 100, stdin);
+        printf("Numero: ");
+        scanf("%i%*c", &novo->endereco.numero);
+        printf("Bairro: ");
+        fgets(novo->endereco.bairro, 100, stdin);
+        printf("CEP: ");
+        fgets(novo->endereco.cep, 100, stdin);
+        printf("Cidade: ");
+        fgets(novo->endereco.cidade, 100, stdin);
+        printf("Estado (2 letras): ");
+        fgets(novo->endereco.estado, 100, stdin);
         printf("\n~~~~ Data de nascimento ~~~~");
         printf("\nDia: ");
         scanf("%i%*c", &novo->nascimento.dia);
@@ -44,17 +68,12 @@ void adicionarcliente(cli **lista){
         scanf("%i%*c", &novo->nascimento.mes);
         printf("Ano: ");
         scanf("%i%*c", &novo->nascimento.ano);
-        printf("\n~~~~ Data de emprestimo ~~~~");
-        printf("\nDia: ");
-        scanf("%i%*c", &novo->emprestimo.data.dia);
-        printf("Mes: ");
-        scanf("%i%*c", &novo->emprestimo.data.mes);
-        printf("Ano: ");
-        scanf("%i%*c", &novo->emprestimo.data.ano);
-        printf("\nValor do emprestimo: R$");
-        scanf("%f%*c", &novo->emprestimo.valor);
-        printf("Quantas parcelas: ");
-        scanf("%i%*c", &novo->parcelas);
+        
+        novo->emprestimo.data.dia = 0;
+        novo->emprestimo.data.mes = 0;
+        novo->emprestimo.data.ano = 0;
+        novo->emprestimo.valor = 0;
+        novo->parcelas = 0;
         novo->parcelaspagas = 0;
         novo->proximo = NULL;
     }
@@ -119,31 +138,43 @@ void editarcliente(cli **lista){
         
         if(aux->cpf == cpf){
             printf("\nNome: ");
-        fgets(aux->nome, 1000, stdin);
-        printf("Endereco: ");
-        fgets(aux->endereco, 1000, stdin);
-        printf("Cpf: ");
-        scanf("%i%*c", &aux->cpf);
+            fgets(aux->nome, 1000, stdin);
+            printf("\n~~~~ Endereco ~~~~");
+            printf("\nRua: ");
+            fgets(aux->endereco.rua, 100, stdin);
+            printf("\nNumero: ");
+            scanf("%i%*c", &aux->endereco.numero);
+            printf("\nBairro: ");
+            fgets(aux->endereco.bairro, 100, stdin);
+            printf("\nCEP: ");
+            fgets(aux->endereco.cep, 100, stdin);
+            printf("\nCidade: ");
+            fgets(aux->endereco.cidade, 100, stdin);
+            printf("\nEstado (2 letras): ");
+            fgets(aux->endereco.estado, 100, stdin);
+            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            printf("Cpf: ");
+            scanf("%i%*c", &aux->cpf);
 
-        printf("\nData de nascimento: ");
-        printf("\nDia: ");
-        scanf("%i%*c", &aux->nascimento.dia);
-        printf("\nMes: ");
-        scanf("%i%*c", &aux->nascimento.mes);
-        printf("\nAno: ");
-        scanf("%i%*c", &aux->nascimento.ano);
+            printf("\n~~~~ Data de nascimento ~~~~");
+            printf("\nDia: ");
+            scanf("%i%*c", &aux->nascimento.dia);
+            printf("\nMes: ");
+            scanf("%i%*c", &aux->nascimento.mes);
+            printf("\nAno: ");
+            scanf("%i%*c", &aux->nascimento.ano);
 
-        printf("\nData de emprestimo: ");
-        printf("\nDia: ");
-        scanf("%i%*c", &aux->emprestimo.data.dia);
-        printf("Mes: ");
-        scanf("%i%*c", &aux->emprestimo.data.mes);
-        printf("Ano: ");
-        scanf("%i%*c", &aux->emprestimo.data.ano);
-        printf("\nValor do emprestimo: R$");
-        scanf("%f%*c", &aux->emprestimo.valor);
-        printf("\nQuantas parcelas: ");
-        scanf("%i%*c", &aux->parcelas);
+            printf("\nData de emprestimo: ");
+            printf("\nDia: ");
+            scanf("%i%*c", &aux->emprestimo.data.dia);
+            printf("Mes: ");
+            scanf("%i%*c", &aux->emprestimo.data.mes);
+            printf("Ano: ");
+            scanf("%i%*c", &aux->emprestimo.data.ano);
+            printf("\nValor do emprestimo: R$");
+            scanf("%f%*c", &aux->emprestimo.valor);
+            printf("\nQuantas parcelas: ");
+            scanf("%i%*c", &aux->parcelas);
         }
         else{
             while(aux->proximo != NULL){
@@ -155,8 +186,20 @@ void editarcliente(cli **lista){
                     if(aux->cpf == cpf){
                         printf("\nNome: ");
                         fgets(aux->nome, 1000, stdin);
-                        printf("Endereco: ");
-                        fgets(aux->endereco, 1000, stdin);
+                        printf("\n~~~~ Endereco ~~~~");
+                        printf("\nRua: ");
+                        fgets(aux->endereco.rua, 100, stdin);
+                        printf("\nNumero: ");
+                        scanf("%i%*c", &aux->endereco.numero);
+                        printf("\nBairro: ");
+                        fgets(aux->endereco.bairro, 100, stdin);
+                        printf("\nCEP: ");
+                        fgets(aux->endereco.cep, 100, stdin);
+                        printf("\nCidade: ");
+                        fgets(aux->endereco.cidade, 100, stdin);
+                        printf("\nEstado (2 letras): ");
+                        fgets(aux->endereco.estado, 100, stdin);
+                        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                         printf("Cpf: ");
                         scanf("%i%*c", &aux->cpf);
 
@@ -246,16 +289,6 @@ void cadastrarparcelapaga(cli **lista){
             }
         }
     }
-
-    printf("\n~~~~~CADASTRANDO PARCELA PAGA ~~~~\n");
-    printf("Data do pagamento: ");
-    printf("\nDia: ");
-    scanf("%i%*c", &data.dia);
-    printf("Mes: ");
-    scanf("%i%*c", &data.mes);
-    printf("Anp: ");
-    scanf("%i%*c", &data.ano);
-    
 }
 
 
@@ -286,16 +319,23 @@ void imprimircliente(cli *cliente){
         scanf("%i%*c", &cpf);
 
         if(aux->cpf == cpf){
-            valor = aux->emprestimo.valor / aux->parcelas;
             printf("\n~~~~~ INFORMACOES DO CLIENTE ~~~~\n");
             printf(
                 "Nome: %s"
-                "Endereco: %s"
                 "Cpf: %i"
-                "\nData de nascimento: %i/%i/%i", 
-                aux->nome, aux->endereco, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano
+                "\nData de nascimento: %i/%i/%i"
+                "\n~~ Endereco ~~\n"
+                "Rua: %s"
+                "Numero: %i\n"
+                "Bairro: %s"
+                "Cidade: %s"
+                "Estado: %s"
+                "CEP: %s", 
+                aux->nome, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano, aux->endereco.rua, aux->endereco.numero,aux->endereco.bairro, aux->endereco.cidade, aux->endereco.estado,aux->endereco.cep, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano
             );
             if(aux->parcelaspagas != aux->parcelas){
+                valor = aux->emprestimo.valor / aux->parcelas;
+                printf("~~~~~~~~ EMPRESTIMO ~~~~~~~~");
                 printf(
                     "\nData do emprestimo: %i/%i/%i"
                     "\nValor do emprestimo: %.2f"
@@ -310,15 +350,25 @@ void imprimircliente(cli *cliente){
             while(aux->proximo != NULL){
                 aux = aux->proximo;
                 if(aux->cpf == cpf){
+                    printf("\n~~~~~ INFORMACOES DO CLIENTE ~~~~\n");
                     printf(
-                        "\nNome: %s"
-                        "\nEndereco: %s"
-                        "\nCpf: %i"
-                        "\nData de nascimento: %i/%i/%i"
-                        "\nData do emprestimo: %i/%i/%i"
-                        "\nValor do emprestimo: %.2f"
-                        "\nNumero de parcelas: %i", aux->nome, aux->endereco, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano, aux->emprestimo.data.mes, aux->emprestimo.data.mes, aux->emprestimo.data.ano, aux->emprestimo.valor, aux->parcelas
+                        "Nome: %s"
+                        "Endereco:\nRua %s, %i - %s, %s-%s\nCEP: %s"
+                        "Cpf: %i"
+                        "\nData de nascimento: %i/%i/%i", 
+                        aux->nome, aux->endereco.rua, aux->endereco.numero,aux->endereco.bairro, aux->endereco.cidade, aux->endereco.estado,aux->endereco.cep, aux->cpf, aux->nascimento.dia, aux->nascimento.mes, aux->nascimento.ano
                     );
+                    if(aux->parcelaspagas != aux->parcelas){
+                        valor = aux->emprestimo.valor / aux->parcelas;
+                        printf("~~~~~~~~ EMPRESTIMO ~~~~~~~~");
+                        printf(
+                            "\nData do emprestimo: %i/%i/%i"
+                            "\nValor do emprestimo: %.2f"
+                            "\nNumero de parcelas: %i parcelas de R$%.2f\n", 
+                            aux->emprestimo.data.mes, aux->emprestimo.data.mes, aux->emprestimo.data.ano, aux->emprestimo.valor, aux->parcelas, valor
+                        );
+                    }
+
                     verparcelas(cliente);
                     break;
                 }
@@ -357,7 +407,7 @@ void cadastraremprestimo(cli **lista){
                 scanf("%i%*c", &aux->emprestimo.data.ano);
                 printf("\nValor do emprestimo: R$");
                 scanf("%f%*c", &aux->emprestimo.valor);
-                printf("\nQuantas parcelas: ");
+                printf("\nQuantas parcelas (maximo 12): ");
                 scanf("%i%*c", &aux->parcelas);
             }
             else{
@@ -396,10 +446,11 @@ void cadastraremprestimo(cli **lista){
 }
 
 
+////////////////////////////// main //////////////////////////////
+
 int main(){
     cli *clientes = NULL;
-    int r;
-    dt data;
+    int r;      // resposta do usuario
 
     while(r != 0){
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -442,7 +493,7 @@ int main(){
             break;
         default:
             printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-            printf("\nOPCAO INVALIDA\n");
+            printf("OPCAO INVALIDA\n");
             break;
         }
         
